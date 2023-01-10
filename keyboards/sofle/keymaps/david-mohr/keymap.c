@@ -22,14 +22,15 @@ enum custom_keycodes {
     UPDIR = SAFE_RANGE,
 };
 
-// I've removed the top row completely and the two outer buttons on each side of the bottom row
+// I've removed the top row completely, the two outer buttons on each side of the bottom row and the outer columns of the main rows
+// Essentially left with 3x15 + 3 on each hand
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_COLEMAKDH] = LAYOUT(
-  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,                             XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
-  KC_TAB,    KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,                                KC_J,     KC_L,     KC_U,     KC_Y,    KC_SCLN,  KC_BSLS,
-  KC_LCTL,  HOME_A,   HOME_R,   HOME_S,   HOME_T,    KC_G,                                KC_M,    HOME_N,   HOME_E,   HOME_I,   HOME_O,   KC_QUOT,
-  KC_LGUI,   KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,   KC_MUTE,           XXXXXXX,  KC_K,     KC_H,    KC_COMM,  KC_DOT,   KC_SLSH,  XXXXXXX,
-  XXXXXXX,XXXXXXX,           KC_LCTL,  KC_SPC,  LT(_NUM_NAV, KC_ESC),           KC_BSPC,  LT(_SYM, KC_ENT),  KC_RSFT,            XXXXXXX,  XXXXXXX
+  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,                                 XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
+  XXXXXXX,   KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,                                    KC_J,     KC_L,     KC_U,     KC_Y,    KC_SCLN,  XXXXXXX,
+  XXXXXXX,  HOME_A,   HOME_R,   HOME_S,   HOME_T,    KC_G,                                    KC_M,    HOME_N,   HOME_E,   HOME_I,   HOME_O,   XXXXXXX,
+  XXXXXXX,   KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,   KC_MUTE,               XXXXXXX,  KC_K,     KC_H,    KC_COMM,  KC_DOT,   KC_SLSH,  XXXXXXX,
+  XXXXXXX,XXXXXXX,           KC_BSPC,LT(_NUM_NAV, KC_SPC),LT(_NUM_NAV, KC_ESC),      KC_TAB,  LT(_SYM, KC_ENT),  KC_QUOT,            XXXXXXX,  XXXXXXX
 ),
 
 [_NUM_NAV] = LAYOUT(
@@ -37,7 +38,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX,  XXXXXXX,   KC_7,     KC_8,     KC_9,    XXXXXXX,                       XXXXXXX,  XXXXXXX,  KC_PGUP,  XXXXXXX,  XXXXXXX,  XXXXXXX,
   XXXXXXX,  KC_DOT,    KC_4,     KC_5,     KC_6,    XXXXXXX,                       KC_LEFT,  KC_DOWN,   KC_UP,   KC_RGHT,  XXXXXXX,  XXXXXXX,
   XXXXXXX,   KC_0,     KC_1,     KC_2,     KC_3,    XXXXXXX, _______,     _______, XXXXXXX,  XXXXXXX,  KC_PGDN,  XXXXXXX,  XXXXXXX,  XXXXXXX,
-  XXXXXXX,  XXXXXXX,                      _______, _______, __HELD__,     _______, _______, _______,             XXXXXXX,  XXXXXXX
+  XXXXXXX,  XXXXXXX,                      _______, __HELD__, __HELD__,     _______, _______, _______,             XXXXXXX,  XXXXXXX
 ),
 [_SYM] = LAYOUT(
   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,                        XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
