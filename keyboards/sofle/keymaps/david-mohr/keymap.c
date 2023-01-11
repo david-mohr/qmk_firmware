@@ -29,8 +29,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,                                 XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
   XXXXXXX,   KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,                                    KC_J,     KC_L,     KC_U,     KC_Y,    KC_SCLN,  XXXXXXX,
   XXXXXXX,  HOME_A,   HOME_R,   HOME_S,   HOME_T,    KC_G,                                    KC_M,    HOME_N,   HOME_E,   HOME_I,   HOME_O,   XXXXXXX,
-  XXXXXXX,   KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,   KC_MUTE,               XXXXXXX,  KC_K,     KC_H,    KC_COMM,  KC_DOT,   KC_SLSH,  XXXXXXX,
-  XXXXXXX,XXXXXXX,           KC_BSPC,LT(_NUM_NAV, KC_SPC),LT(_NUM_NAV, KC_ESC),      KC_TAB,  LT(_SYM, KC_ENT),  KC_QUOT,            XXXXXXX,  XXXXXXX
+  XXXXXXX,   KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,   KC_MUTE,               KC_BTN3,  KC_K,     KC_H,    KC_COMM,  KC_DOT,   KC_SLSH,  XXXXXXX,
+  XXXXXXX,XXXXXXX,              KC_BSPC,LT(_NUM_NAV, KC_SPC), KC_ESC,               KC_TAB,  LT(_SYM, KC_ENT),  KC_QUOT,            XXXXXXX,  XXXXXXX
 ),
 
 [_NUM_NAV] = LAYOUT(
@@ -63,20 +63,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 #ifdef ENCODER_ENABLE
 
-static int8_t ticks = 0;
+static int8_t l_ticks = 0;
 bool encoder_update_user(uint8_t index, bool clockwise) {
   if (index == 0) {
-    if (clockwise) { ++ticks; } else { --ticks; }  // Count up or down.
-    if (abs(ticks) >= 5) {                         // Take action!
-                                                   // tap_code(clockwise ? KC_MNXT : KC_MPRV);
+    if (clockwise) { ++l_ticks; } else { --l_ticks; }  // Count up or down.
+    if (abs(l_ticks) >= 5) {                           // Take action!
       tap_code(clockwise ? KC_VOLD : KC_VOLU);
-      ticks = 0;                                   // Reset counter.
+      l_ticks = 0;                                     // Reset counter.
     }
   } else if (index == 1) {
     if (clockwise) {
-      tap_code(KC_PGDN);
+      tap_code(KC_MS_WH_DOWN);
     } else {
-      tap_code(KC_PGUP);
+      tap_code(KC_MS_WH_UP);
     }
   }
   return true;
