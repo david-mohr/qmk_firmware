@@ -30,15 +30,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX,   KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,                                    KC_J,     KC_L,     KC_U,     KC_Y,    KC_SCLN,  XXXXXXX,
   XXXXXXX,  HOME_A,   HOME_R,   HOME_S,   HOME_T,    KC_G,                                    KC_M,    HOME_N,   HOME_E,   HOME_I,   HOME_O,   XXXXXXX,
   XXXXXXX,   KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,   KC_MUTE,               KC_BTN3,  KC_K,     KC_H,    KC_COMM,  KC_DOT,   KC_SLSH,  XXXXXXX,
-  XXXXXXX,XXXXXXX,              KC_BSPC,LT(_NUM_NAV, KC_SPC), KC_ESC,               KC_TAB,  LT(_SYM, KC_ENT),  KC_QUOT,            XXXXXXX,  XXXXXXX
+  XXXXXXX,XXXXXXX,       KC_BSPC,LT(_NUM_NAV, KC_SPC),MT(MOD_LALT, KC_TAB),          KC_ESC,  LT(_SYM, KC_ENT),  KC_QUOT,            XXXXXXX,  XXXXXXX
 ),
 
 [_NUM_NAV] = LAYOUT(
   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,                       XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
-  XXXXXXX,  XXXXXXX,   KC_7,     KC_8,     KC_9,    XXXXXXX,                       XXXXXXX,  XXXXXXX,  KC_PGUP,  XXXXXXX,  XXXXXXX,  XXXXXXX,
-  XXXXXXX,   KC_0,     KC_1,     KC_2,     KC_3,    KC_DOT,                        KC_LEFT,  KC_DOWN,   KC_UP,   KC_RGHT,  XXXXXXX,  XXXXXXX,
-  XXXXXXX,  XXXXXXX,   KC_4,     KC_5,     KC_6,    XXXXXXX, _______,     _______, XXXXXXX,  XXXXXXX,  KC_PGDN,  XXXXXXX,  XXXXXXX,  XXXXXXX,
-  XXXXXXX,  XXXXXXX,                      _______, __HELD__, __HELD__,     _______, _______, _______,             XXXXXXX,  XXXXXXX
+  XXXXXXX,  XXXXXXX,   KC_7,     KC_8,     KC_9,    KC_CUT,                       XXXXXXX,  XXXXXXX,  KC_PGUP,  XXXXXXX,  XXXXXXX,  XXXXXXX,
+  XXXXXXX,   KC_0,    KC_1,     KC_2,     KC_3,    KC_COPY,                        KC_LEFT,  KC_DOWN,   KC_UP,   KC_RGHT,  XXXXXXX,  XXXXXXX,
+  XXXXXXX,  KC_DOT,   KC_4,     KC_5,     KC_6,    KC_PASTE, _______,     _______, XXXXXXX,  XXXXXXX,  KC_PGDN,  XXXXXXX,  XXXXXXX,  XXXXXXX,
+  XXXXXXX,  XXXXXXX,                    _______, __HELD__, __HELD__,     _______, _______, _______,             XXXXXXX,  XXXXXXX
 ),
 [_SYM] = LAYOUT(
   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,                        XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
@@ -57,6 +57,59 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           SEND_STRING("../");
         }
         return false;
+      case MT(MOD_LALT, KC_TAB):
+		if (record->tap.count && record->event.pressed) {
+          tap_code16(KC_TAB);
+		  return false;
+		} else if (record->event.pressed) {
+          // register_mods(mod_config(MOD_LALT));
+          layer_on(_NUM_NAV);
+        } else {
+          // unregister_mods(mod_config(MOD_LALT));
+          layer_off(_NUM_NAV);
+		}
+		return true;
+      case KC_COPY:
+        if (record->event.pressed) {
+          register_mods(mod_config(MOD_LCTL));
+          register_code(KC_C);
+        } else {
+          unregister_mods(mod_config(MOD_LCTL));
+          unregister_code(KC_C);
+        }
+        return false;
+      case KC_PASTE:
+        if (record->event.pressed) {
+          register_mods(mod_config(MOD_LCTL));
+          register_code(KC_V);
+        } else {
+          unregister_mods(mod_config(MOD_LCTL));
+          unregister_code(KC_V);
+        }
+        return false;
+      case KC_CUT:
+        if (record->event.pressed) {
+          register_mods(mod_config(MOD_LCTL));
+          register_code(KC_X);
+        } else {
+          unregister_mods(mod_config(MOD_LCTL));
+          unregister_code(KC_X);
+        }
+        return false;
+      case KC_ALTNUM:
+        if (record->event.pressed) {
+          register_mods(mod_config(MOD_LALT));
+          layer_on(_NUM_NAV);
+        } else {
+          unregister_mods(mod_config(MOD_LALT));
+          layer_off(_NUM_NAV);
+        }
+		if (record->tap.count && record->event.pressed) {
+			tap_code16(C(KC_C)); // Intercept tap function to send Ctrl-C
+		} else if (record->event.pressed) {
+			tap_code16(C(KC_V)); // Intercept hold function to send Ctrl-V
+		}
+        break;
     }
     return true;
 }
