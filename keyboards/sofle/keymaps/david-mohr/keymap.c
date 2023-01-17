@@ -10,6 +10,9 @@
 #define HOME_I LALT_T(KC_I)
 #define HOME_O RGUI_T(KC_O)
 
+#define DMM_Z LCTL_T(KC_Z)
+#define DMM_X LSFT_T(KC_X)
+
 #define __HELD__ _______
 
 enum sofle_layers {
@@ -29,7 +32,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,                                 XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
   XXXXXXX,   KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,                                    KC_J,     KC_L,     KC_U,     KC_Y,    KC_SCLN,  XXXXXXX,
   XXXXXXX,  HOME_A,   HOME_R,   HOME_S,   HOME_T,    KC_G,                                    KC_M,    HOME_N,   HOME_E,   HOME_I,   HOME_O,   XXXXXXX,
-  XXXXXXX,   KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,   KC_MUTE,               KC_BTN3,  KC_K,     KC_H,    KC_COMM,  KC_DOT,   KC_SLSH,  XXXXXXX,
+  XXXXXXX,  DMM_Z,    DMM_X,     KC_C,     KC_D,     KC_V,   KC_MUTE,               KC_BTN3,  KC_K,     KC_H,    KC_COMM,  KC_DOT,   KC_SLSH,  XXXXXXX,
   XXXXXXX,XXXXXXX,       KC_BSPC,LT(_NUM_NAV, KC_SPC),MT(MOD_LALT, KC_TAB),          KC_ESC,  LT(_SYM, KC_ENT),  KC_QUOT,            XXXXXXX,  XXXXXXX
 ),
 
