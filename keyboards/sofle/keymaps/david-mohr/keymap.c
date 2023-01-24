@@ -23,6 +23,7 @@ enum sofle_layers {
 
 enum custom_keycodes {
     UPDIR = SAFE_RANGE,
+    KC_ALTNUM,
 };
 
 // I've removed the top row completely, the two outer buttons on each side of the bottom row and the outer columns of the main rows
@@ -38,9 +39,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_NUM_NAV] = LAYOUT(
   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,                       XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
-  XXXXXXX,  XXXXXXX,   KC_7,     KC_8,     KC_9,    KC_CUT,                       XXXXXXX,  XXXXXXX,  KC_PGUP,  XXXXXXX,  XXXXXXX,  XXXXXXX,
-  XXXXXXX,   KC_0,    KC_1,     KC_2,     KC_3,    KC_COPY,                        KC_LEFT,  KC_DOWN,   KC_UP,   KC_RGHT,  XXXXXXX,  XXXXXXX,
-  XXXXXXX,  KC_DOT,   KC_4,     KC_5,     KC_6,    KC_PASTE, _______,     _______, XXXXXXX,  XXXXXXX,  KC_PGDN,  XXXXXXX,  XXXXXXX,  XXXXXXX,
+  XXXXXXX,  XXXXXXX,   KC_7,     KC_8,     KC_9,    KC_BTN3,                       XXXXXXX,  XXXXXXX,  KC_PGUP,  XXXXXXX,  XXXXXXX,  XXXXXXX,
+  XXXXXXX,   KC_0,    KC_1,     KC_2,     KC_3,     KC_TAB,                        KC_LEFT,  KC_DOWN,   KC_UP,   KC_RGHT,  XXXXXXX,  XXXXXXX,
+  XXXXXXX,  KC_DOT,   KC_4,     KC_5,     KC_6,    KC_ENTER, _______,     _______, XXXXXXX,  XXXXXXX,  KC_PGDN,  XXXXXXX,  XXXXXXX,  XXXXXXX,
   XXXXXXX,  XXXXXXX,                    _______, __HELD__, __HELD__,     _______, _______, _______,             XXXXXXX,  XXXXXXX
 ),
 [_SYM] = LAYOUT(
