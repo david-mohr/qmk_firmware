@@ -24,6 +24,7 @@ enum sofle_layers {
 enum custom_keycodes {
     UPDIR = SAFE_RANGE,
     KC_ALTNUM,
+    BSPC_DEL
 };
 
 // I've removed the top row completely, the two outer buttons on each side of the bottom row and the outer columns of the main rows
@@ -34,7 +35,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX,   KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,                                    KC_J,     KC_L,     KC_U,     KC_Y,    KC_SCLN,  XXXXXXX,
   XXXXXXX,  HOME_A,   HOME_R,   HOME_S,   HOME_T,    KC_G,                                    KC_M,    HOME_N,   HOME_E,   HOME_I,   HOME_O,   XXXXXXX,
   XXXXXXX,  DMM_Z,    DMM_X,     KC_C,     KC_D,     KC_V,   KC_MUTE,               KC_BTN3,  KC_K,     KC_H,    KC_COMM,  KC_DOT,   KC_SLSH,  XXXXXXX,
-  XXXXXXX,XXXXXXX,       KC_BSPC,LT(_NUM_NAV, KC_SPC),MT(MOD_LALT, KC_TAB),          KC_ESC,  LT(_SYM, KC_ENT),  KC_QUOT,            XXXXXXX,  XXXXXXX
+  XXXXXXX,XXXXXXX,       BSPC_DEL,LT(_NUM_NAV, KC_SPC),MT(MOD_LALT, KC_TAB),          KC_ESC,  LT(_SYM, KC_ENT),  KC_QUOT,            XXXXXXX,  XXXXXXX
 ),
 
 [_NUM_NAV] = LAYOUT(
@@ -54,6 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    static uint8_t saved_mods = 0;
     if (!process_caps_word(keycode, record)) { return false; }
     switch (keycode) {
       case UPDIR:  // Types ../ to go up a directory on the shell.
@@ -62,17 +64,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         return false;
       case MT(MOD_LALT, KC_TAB):
-		if (record->tap.count && record->event.pressed) {
+        if (record->tap.count && record->event.pressed) {
           tap_code16(KC_TAB);
-		  return false;
-		} else if (record->event.pressed) {
+          return false;
+        } else if (record->event.pressed) {
           // register_mods(mod_config(MOD_LALT));
           layer_on(_NUM_NAV);
         } else {
           // unregister_mods(mod_config(MOD_LALT));
           layer_off(_NUM_NAV);
-		}
-		return true;
+        }
+        return true;
       case KC_COPY:
         if (record->event.pressed) {
           register_mods(mod_config(MOD_LCTL));
@@ -108,12 +110,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           unregister_mods(mod_config(MOD_LALT));
           layer_off(_NUM_NAV);
         }
-		if (record->tap.count && record->event.pressed) {
-			tap_code16(C(KC_C)); // Intercept tap function to send Ctrl-C
-		} else if (record->event.pressed) {
-			tap_code16(C(KC_V)); // Intercept hold function to send Ctrl-V
-		}
+        if (record->tap.count && record->event.pressed) {
+          tap_code16(C(KC_C)); // Intercept tap function to send Ctrl-C
+        } else if (record->event.pressed) {
+          tap_code16(C(KC_V)); // Intercept hold function to send Ctrl-V
+        }
         break;
+      case BSPC_DEL:
+        if (record->event.pressed) {
+          saved_mods = get_mods() & MOD_MASK_SHIFT;
+
+          if (saved_mods == MOD_MASK_SHIFT) {  // Both shifts pressed
+            register_code(KC_DEL);
+          } else if (saved_mods) {   // One shift pressed
+            del_mods(saved_mods);  // Remove any Shifts present
+            register_code(KC_DEL);
+            add_mods(saved_mods);  // Add shifts again
+          } else {
+            register_code(KC_BSPC);
+          }
+        } else {
+          unregister_code(KC_DEL);
+          unregister_code(KC_BSPC);
+        }
+        return false;
     }
     return true;
 }
