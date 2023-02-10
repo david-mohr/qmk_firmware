@@ -142,3 +142,41 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
+
+#ifdef OLED_ENABLE
+
+bool dm_render_status(void) {
+    // Host Keyboard Layer Status
+    oled_write_P(PSTR("Layer: "), false);
+    switch (get_highest_layer(layer_state)) {
+        case 0:
+            oled_write_P(PSTR("BASE\n"), false);
+            break;
+        case 1:
+            oled_write_P(PSTR("NUM/NAV\n"), false);
+            break;
+        case 2:
+            oled_write_P(PSTR("SYMBOL\n"), false);
+            break;
+        case 3:
+            oled_write_P(PSTR("LED/MOUSE\n"), false);
+            break;
+        default:
+            // Or use the write_ln shortcut over adding '\n' to the end of your string
+            oled_write_ln_P(PSTR("Undefined"), false);
+    }
+
+    oled_write_P(PSTR("TAP_TERM: "), false);
+    oled_write(get_u8_str(g_tapping_term, ' '), false);
+
+    return false;
+}
+
+bool oled_task_user(void) {
+    if (is_keyboard_master()) {
+        dm_render_status();  // Renders the current keyboard state (layer, lock, caps, scroll, etc)
+    }
+    return false;
+}
+
+#endif

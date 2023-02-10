@@ -81,7 +81,7 @@
 // my stuff
 #define IGNORE_MOD_TAP_INTERRUPT
 #define TAPPING_FORCE_HOLD
-#define TAPPING_TERM 200
+#define TAPPING_TERM 160
 // #define EE_HANDS
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
