@@ -29,13 +29,12 @@
 #define DMM_Z LCTL_T(KC_Z)
 #define DMM_X LSFT_T(KC_X)
 
-#define LTH_IN  KC_BSPC
+#define LTH_IN  BSPC_DEL
 #define LTH_MID LT(_NUM_NAV, KC_SPC)
 #define LTH_OUT MT(MOD_LALT, KC_TAB)
-#define RTH_OUT  KC_ESC
+#define RTH_OUT KC_ESC
 #define RTH_MID LT(_SYM, KC_ENT)
-#define RTH_IN KC_QUOT
-
+#define RTH_IN  KC_QUOT
 
 #define __HELD__ _______
 
@@ -89,11 +88,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [3] = LAYOUT_split_3x5_3(
   //,--------------------------------------------.                    ,--------------------------------------------.
-      QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|-------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_WH_U, KC_MS_U, KC_WH_D,   DT_UP,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, RGB_SPD,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI,                      XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX,
+  //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
+      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, RGB_SPD,                      XXXXXXX, KC_BTN1, KC_BTN3, KC_BTN2, DT_DOWN,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
                                  _______, _______, _______,    _______, _______, _______
                              //`--------------------------'  `--------------------------'
