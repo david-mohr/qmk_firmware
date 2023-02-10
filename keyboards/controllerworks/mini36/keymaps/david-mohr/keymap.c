@@ -1,16 +1,16 @@
 /*
  * Copyright 2022 Kevin Gee <info@controller.works>
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -46,6 +46,7 @@ enum dave_layers {
 
 enum custom_keycodes {
     UPDIR = SAFE_RANGE,
+    BSPC_DEL
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -64,19 +65,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_NUM_NAV] = LAYOUT_split_3x5_3(
   //,--------------------------------------------.                    ,--------------------------------------------.
-      KC_MINS,    KC_7,    KC_8,    KC_9, XXXXXXX,                      XXXXXXX, XXXXXXX, KC_PGUP, XXXXXXX, XXXXXXX,
+      KC_MINS,    KC_7,    KC_8,    KC_9, XXXXXXX,                      XXXXXXX, XXXXXXX, KC_PGUP, KC_HOME, KC_KB_VOLUME_UP,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-         KC_0,    KC_1,    KC_2,    KC_3, XXXXXXX,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX,
+         KC_0,    KC_1,    KC_2,    KC_3,KC_ENTER,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-       KC_DOT,    KC_4,    KC_5,    KC_6,KC_ENTER,                      XXXXXXX, XXXXXXX, KC_PGDN, XXXXXXX, XXXXXXX,
+       KC_DOT,    KC_4,    KC_5,    KC_6, XXXXXXX,                      XXXXXXX, XXXXXXX, KC_PGDN, KC_END, KC_KB_VOLUME_DOWN,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                 _______,__HELD__,__HELD__,    _______,   MO(3), _______
+                                 _______,__HELD__,__HELD__,    _______,   MO(3),  KC_GRV
                              //`--------------------------'  `--------------------------'
   ),
 
   [_SYM] = LAYOUT_split_3x5_3(
   //,--------------------------------------------.                    ,--------------------------------------------.
-      KC_TILD,   KC_LT,   KC_GT, KC_UNDS,   UPDIR,                      KC_AMPR,  KC_GRV, KC_LBRC, KC_RBRC, KC_PERC,
+      KC_TILD,   KC_LT,   KC_GT, KC_UNDS,   UPDIR,                      KC_AMPR, XXXXXXX, KC_LBRC, KC_RBRC, KC_PERC,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       KC_EXLM, KC_MINS, KC_PLUS,  KC_EQL, KC_HASH,                      KC_PIPE, KC_COLN, KC_LPRN, KC_RPRN,   KC_AT,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
@@ -100,6 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    static uint8_t saved_mods = 0;
     if (!process_caps_word(keycode, record)) { return false; }
     switch (keycode) {
       case UPDIR:  // Types ../ to go up a directory on the shell.
@@ -119,6 +121,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           layer_off(_NUM_NAV);
 		}
 		return true;
+      case BSPC_DEL:
+        if (record->event.pressed) {
+          saved_mods = get_mods() & MOD_MASK_SHIFT;
+
+          if (saved_mods == MOD_MASK_SHIFT) {  // Both shifts pressed
+            register_code(KC_DEL);
+          } else if (saved_mods) {   // One shift pressed
+            del_mods(saved_mods);  // Remove any Shifts present
+            register_code(KC_DEL);
+            add_mods(saved_mods);  // Add shifts again
+          } else {
+            register_code(KC_BSPC);
+          }
+        } else {
+          unregister_code(KC_DEL);
+          unregister_code(KC_BSPC);
+        }
+        return false;
     }
     return true;
 }
