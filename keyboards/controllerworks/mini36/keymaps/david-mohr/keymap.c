@@ -37,6 +37,7 @@
 #define RTH_IN  KC_QUOT
 
 #define __HELD__ _______
+#include "lemming.h"
 
 enum dave_layers {
     _COLEMAKDH,
@@ -171,9 +172,17 @@ bool dm_render_status(void) {
 
     return false;
 }
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+    if (is_keyboard_master()) {
+        return OLED_ROTATION_90;
+    }
+    return OLED_ROTATION_0;
+}
 
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
+        oled_animate_lemmings();
+    } else {
         dm_render_status();  // Renders the current keyboard state (layer, lock, caps, scroll, etc)
     }
     return false;
