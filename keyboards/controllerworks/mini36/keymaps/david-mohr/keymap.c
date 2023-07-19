@@ -65,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_NUM_NAV] = LAYOUT_split_3x5_3(
   //,--------------------------------------------.                    ,--------------------------------------------.
-      KC_MINS,    KC_7,    KC_8,    KC_9, XXXXXXX,                      XXXXXXX, XXXXXXX, KC_PGUP, KC_HOME, KC_KB_VOLUME_UP,
+       KC_ESC,    KC_7,    KC_8,    KC_9, XXXXXXX,                      XXXXXXX, XXXXXXX, KC_PGUP, KC_HOME, KC_KB_VOLUME_UP,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
          KC_0,    KC_1,    KC_2,    KC_3,KC_ENTER,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
@@ -77,11 +77,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SYM] = LAYOUT_split_3x5_3(
   //,--------------------------------------------.                    ,--------------------------------------------.
-      KC_TILD,   KC_LT,   KC_GT, KC_UNDS,   UPDIR,                      KC_AMPR,   UPDIR, KC_LBRC, KC_RBRC, KC_PERC,
+      KC_TILD, XXXXXXX,   KC_GT, KC_BSLS, XXXXXXX,                      KC_AMPR,   UPDIR, KC_LBRC, KC_RBRC, KC_PERC,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       KC_EXLM, KC_MINS, KC_ASTR,  KC_EQL, KC_HASH,                      KC_PIPE, KC_COLN, KC_LPRN, KC_RPRN,   KC_AT,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      KC_CIRC, KC_SLSH, KC_PLUS, KC_BSLS, XXXXXXX,                      XXXXXXX,  KC_DLR, KC_LCBR, KC_RCBR, KC_QUES,
+      KC_CIRC, XXXXXXX, KC_PLUS, KC_UNDS, XXXXXXX,                      XXXXXXX,  KC_DLR, KC_LCBR, KC_RCBR, KC_QUES,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
                                  _______,   MO(3), _______,    _______,__HELD__, _______
                              //`--------------------------'  `--------------------------'
