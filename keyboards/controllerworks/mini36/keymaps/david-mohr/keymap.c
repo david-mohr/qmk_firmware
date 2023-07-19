@@ -89,11 +89,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [3] = LAYOUT_split_3x5_3(
   //,--------------------------------------------.                    ,--------------------------------------------.
-      QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_WH_U, KC_MS_U, KC_WH_D,   DT_UP,
+      QK_BOOT, XXXXXXX, XXXXXXX,RGB_MODE_XMAS,RGB_TOG,                      XXXXXXX, KC_WH_U, KC_MS_U, KC_WH_D,   DT_UP,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI,                      XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX,
+      RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI,                      XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, RGB_SPD,                      XXXXXXX, KC_BTN1, KC_BTN3, KC_BTN2, DT_DOWN,
+     RGB_RMOD, RGB_HUD, RGB_SAD, RGB_VAD, RGB_SPD,                      XXXXXXX, KC_BTN1, KC_BTN3, KC_BTN2, DT_DOWN,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
                                  _______, _______, _______,    _______, _______, _______
                              //`--------------------------'  `--------------------------'
