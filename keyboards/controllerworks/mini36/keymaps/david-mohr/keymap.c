@@ -78,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SYM] = LAYOUT_split_3x5_3(
   //,--------------------------------------------.                    ,--------------------------------------------.
-      KC_TILD, XXXXXXX,   KC_GT, KC_BSLS, XXXXXXX,                      KC_AMPR,   UPDIR, KC_LBRC, KC_RBRC, KC_PERC,
+      KC_TILD, KC_DQUO,   KC_GT, KC_BSLS, XXXXXXX,                      KC_AMPR,   UPDIR, KC_LBRC, KC_RBRC, KC_PERC,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       KC_EXLM, KC_MINS, KC_ASTR,  KC_EQL, KC_HASH,                      KC_PIPE, KC_COLN, KC_LPRN, KC_RPRN,   KC_AT,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
