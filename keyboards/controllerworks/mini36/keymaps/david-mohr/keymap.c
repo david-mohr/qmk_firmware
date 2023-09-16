@@ -183,6 +183,7 @@ bool oled_task_user(void) {
     if (is_keyboard_master()) {
         oled_animate_lemmings();
     } else {
+        oled_scroll_off();
         dm_render_status();  // Renders the current keyboard state (layer, lock, caps, scroll, etc)
     }
     return false;
