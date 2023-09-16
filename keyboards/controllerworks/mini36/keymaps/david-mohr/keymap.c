@@ -55,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,--------------------------------------------.                    ,--------------------------------------------.
          KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-       HOME_A,  HOME_R,  HOME_S,  HOME_T,    KC_G,                         KC_M,  HOME_N,  HOME_E,  HOME_I,  HOME_O,
+       HOME_A,  HOME_R,  HOME_S,  HOME_T,    KC_G,                         KC_M,  HOME_N,  HOME_E,  KC_I  ,  KC_O  ,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
         DMM_Z,   DMM_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
@@ -90,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [3] = LAYOUT_split_3x5_3(
   //,--------------------------------------------.                    ,--------------------------------------------.
-      QK_BOOT, XXXXXXX, XXXXXXX,RGB_MODE_XMAS,RGB_TOG,                      XXXXXXX, KC_WH_U, KC_MS_U, KC_WH_D,   DT_UP,
+      QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX,RGB_TOG,                       XXXXXXX, KC_WH_U, KC_MS_U, KC_WH_D,   DT_UP,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI,                      XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
@@ -144,6 +144,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case HOME_A:
+            return TAPPING_TERM + 200;
+        default:
+            return TAPPING_TERM;
+    }
+}
+
 #ifdef OLED_ENABLE
 
 bool dm_render_status(void) {
@@ -168,7 +177,9 @@ bool dm_render_status(void) {
     }
 
     oled_write_P(PSTR("TAP_TERM: "), false);
-    oled_write(get_u8_str(g_tapping_term, ' '), false);
+    oled_write_ln(get_u8_str(g_tapping_term, ' '), false);
+    oled_write_P(PSTR("CAPS_WORD: "), false);
+    oled_write_ln_P(is_caps_word_on() ? PSTR("true") : PSTR("false"), false);
 
     return false;
 }
