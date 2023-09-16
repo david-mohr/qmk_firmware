@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include "keycodes.h"
 #include QMK_KEYBOARD_H
 
 #define HOME_A LGUI_T(KC_A)
@@ -43,11 +44,15 @@ enum dave_layers {
     _COLEMAKDH,
     _NUM_NAV,
     _SYM,
+    _ADMIN,
+    _GAMING,
 };
 
 enum custom_keycodes {
     UPDIR = SAFE_RANGE,
-    BSPC_DEL
+    BSPC_DEL,
+    KC_GAMING,
+    KC_COLEMAK,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -88,23 +93,46 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                              //`--------------------------'  `--------------------------'
   ),
 
-  [3] = LAYOUT_split_3x5_3(
+  [_ADMIN] = LAYOUT_split_3x5_3(
   //,--------------------------------------------.                    ,--------------------------------------------.
-      QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX,RGB_TOG,                       XXXXXXX, KC_WH_U, KC_MS_U, KC_WH_D,   DT_UP,
+      QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX,RGB_TOG,                       XXXXXXX,KC_COLEMAK,KC_GAMING, XXXXXXX,   DT_UP,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI,                      XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX,
+      RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
      RGB_RMOD, RGB_HUD, RGB_SAD, RGB_VAD, RGB_SPD,                      XXXXXXX, KC_BTN1, KC_BTN3, KC_BTN2, DT_DOWN,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
                                  _______, _______, _______,    _______, _______, _______
                              //`--------------------------'  `--------------------------'
-  )
+  ),
+
+  [_GAMING] = LAYOUT_split_3x5_3(
+  //,--------------------------------------------.                    ,--------------------------------------------.
+       KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,KC_COLEMAK,
+  //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
+      KC_LCTL,    KC_A,    KC_S,    KC_D,    KC_F,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
+      KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
+                                XXXXXXX, KC_SPACE,KC_G,       XXXXXXX, KC_ENTER, XXXXXXX
+                             //`--------------------------'  `--------------------------'
+
+  ),
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     static uint8_t saved_mods = 0;
     if (!process_caps_word(keycode, record)) { return false; }
     switch (keycode) {
+      case KC_GAMING:
+        if (record->event.pressed) {
+          set_single_persistent_default_layer(_GAMING);
+        }
+        return false;
+      case KC_COLEMAK:
+        if (record->event.pressed) {
+          set_single_persistent_default_layer(_COLEMAKDH);
+        }
+        return false;
       case UPDIR:  // Types ../ to go up a directory on the shell.
         if (record->event.pressed) {
           SEND_STRING("../");
