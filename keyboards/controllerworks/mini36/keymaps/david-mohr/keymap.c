@@ -107,13 +107,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_GAMING] = LAYOUT_split_3x5_3(
   //,--------------------------------------------.                    ,--------------------------------------------.
-       KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,KC_COLEMAK,
+       KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,                      XXXXXXX, XXXXXXX, KC_UP, XXXXXXX,KC_COLEMAK,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      KC_LCTL,    KC_A,    KC_S,    KC_D,    KC_F,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      KC_LSFT,    KC_A,    KC_S,    KC_D,    KC_F,                      XXXXXXX, KC_LEFT, KC_DOWN,KC_RIGHT, XXXXXXX,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                XXXXXXX, KC_SPACE,KC_G,       XXXXXXX, KC_ENTER, XXXXXXX
+                                KC_ESC, KC_SPACE,KC_G,          KC_ESC, KC_ENTER, XXXXXXX
                              //`--------------------------'  `--------------------------'
 
   ),
