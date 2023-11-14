@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "keycodes.h"
+#include "keymap_us.h"
 #include QMK_KEYBOARD_H
 
 #define HOME_A LGUI_T(KC_A)
@@ -87,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       KC_EXLM, KC_MINS, KC_ASTR,  KC_EQL, KC_HASH,                      KC_PIPE, KC_COLN, KC_LPRN, KC_RPRN,   KC_AT,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      KC_CIRC, XXXXXXX, KC_PLUS, KC_UNDS, XXXXXXX,                      XXXXXXX,  KC_DLR, KC_LCBR, KC_RCBR, KC_QUES,
+      KC_CIRC, KC_AMPR, KC_PLUS, KC_UNDS, XXXXXXX,                      XXXXXXX,  KC_DLR, KC_LCBR, KC_RCBR, KC_QUES,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
                                  _______,   MO(3), _______,    _______,__HELD__, _______
                              //`--------------------------'  `--------------------------'
